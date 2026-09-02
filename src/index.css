@@ -133,3 +133,6 @@ tbody tr:hover {
     width: 80%;
   }
 }
+.highlight-row {
+  background-color: #ffe0cc;
+}

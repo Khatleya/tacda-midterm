@@ -116,14 +116,6 @@ function App() {
     }
   }
 
-  const filteredItems = items.filter((item) => {
-    if (filter === "All") {
-      return true;
-    }
-
-    return item.role === filter;
-  });
-
   const columns = [
     {
       accessorKey: "model",
@@ -152,7 +144,7 @@ function App() {
   ];
 
   const table = useReactTable({
-    data: filteredItems,
+    data: items,
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -212,6 +204,9 @@ function App() {
                 <tr
                   key={row.id}
                   onClick={() => setSelected(row.original)}
+                  className={
+                    filter === row.original.role ? "highlight-row" : ""
+                  }
                 >
                   <td>{row.original.model}</td>
                   <td>{row.original.body}</td>
