@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useEffect } from "react";
+
 import { useReactTable } from "@tanstack/react-table";
 import { getCoreRowModel } from "@tanstack/react-table";
 import { getPaginationRowModel } from "@tanstack/react-table";
@@ -30,6 +32,13 @@ function App() {
 
   const [items, setItems] = useState([]);
   const [selected, setSelected] = useState(null);
+
+  const [active, setActive] = useState(null);
+  const [filter, setFilter] = useState("All");
+
+  useEffect(() => {
+    setActive(selected);
+  }, [selected]);
 
   function checkModel(value) {
     setModel(value);
@@ -107,6 +116,14 @@ function App() {
     }
   }
 
+  const filteredItems = items.filter((item) => {
+    if (filter === "All") {
+      return true;
+    }
+
+    return item.role === filter;
+  });
+
   const columns = [
     {
       accessorKey: "model",
@@ -135,7 +152,7 @@ function App() {
   ];
 
   const table = useReactTable({
-    data: items,
+    data: filteredItems,
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -155,6 +172,27 @@ function App() {
           <Typography variant="h5" className="table-title">
             Guitar Registry
           </Typography>
+
+          <TextField
+            select
+            label="Filter Role"
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+            size="small"
+            className="filter-box"
+          >
+            <MenuItem value="All">
+              All
+            </MenuItem>
+
+            <MenuItem value="Merchant">
+              Merchant
+            </MenuItem>
+
+            <MenuItem value="Consumer">
+              Consumer
+            </MenuItem>
+          </TextField>
 
           <table>
 
@@ -206,6 +244,43 @@ function App() {
             </Button>
 
           </div>
+
+          {active !== null && (
+            <div className="detail-box">
+
+              <Typography variant="h5">
+                Active Guitar
+              </Typography>
+
+              <p>
+                <b>Guitar Model:</b> {active.model}
+              </p>
+
+              <p>
+                <b>Body Type:</b> {active.body}
+              </p>
+
+              <p>
+                <b>Brand:</b> {active.brand}
+              </p>
+
+              <p>
+                <b>Stock:</b> {active.stock}
+              </p>
+
+              <p>
+                <b>Manufacturer:</b> {active.maker}
+              </p>
+
+              <p>
+                <b>User Role:</b>{" "}
+                <span className="role-badge">
+                  {active.role}
+                </span>
+              </p>
+
+            </div>
+          )}
 
         </div>
       )}

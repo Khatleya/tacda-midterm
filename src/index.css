@@ -93,3 +93,29 @@ tbody tr:hover {
 .page-buttons button:hover {
   background-color: #ab0505;
 }
+.filter-box {
+  margin-bottom: 15px;
+  width: 160px;
+}
+
+.detail-box {
+  margin-top: 20px;
+  padding: 15px;
+  border: 1px solid #cccccc;
+  border-left: 5px solid #ff6a00;
+}
+
+.detail-box h5 {
+  color: #d94b00;
+}
+
+.detail-box p {
+  margin: 8px 0;
+}
+
+.role-badge {
+  background-color: #000000;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
