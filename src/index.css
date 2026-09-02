@@ -1,0 +1,46 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.page {
+  min-height: 100vh;
+  background-color: #000000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-box {
+  width: 400px;
+  background-color: white;
+  padding: 25px;
+  border-radius: 10px;
+  border-top: 6px solid #ff6a00;
+}
+
+.title {
+  color: #d94b00;
+  text-align: center;
+}
+
+.add-title {
+  color: #4a2c25;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.role-title {
+  color: #4a2c25;
+  margin-top: 15px;
+}
+
+button.add-button {
+  background-color: #d94b00;
+  color: white;
+  margin-top: 20px;
+}
+
+button.add-button:hover {
+  background-color: #ab0505;
+}
