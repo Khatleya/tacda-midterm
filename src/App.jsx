@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useReactTable } from "@tanstack/react-table";
+import { getCoreRowModel } from "@tanstack/react-table";
+import { getPaginationRowModel } from "@tanstack/react-table";
 
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -8,6 +11,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
+
 
 function App() {
   const [model, setModel] = useState("");
@@ -23,6 +27,9 @@ function App() {
   const [stockError, setStockError] = useState("");
   const [makerError, setMakerError] = useState("");
   const [roleError, setRoleError] = useState("");
+
+  const [items, setItems] = useState([]);
+  const [selected, setSelected] = useState(null);
 
   function checkModel(value) {
     setModel(value);
@@ -43,6 +50,7 @@ function App() {
       setStockError("");
     }
   }
+
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -79,12 +87,129 @@ function App() {
     }
 
     if (noError === false) {
-      alert("Guitar added successfully!");
+      const newItem = {
+        model: model,
+        body: body,
+        brand: brand,
+        stock: stock,
+        maker: maker,
+        role: role
+      };
+
+      setItems([...items, newItem]);
+
+      setModel("");
+      setBody("");
+      setBrand("");
+      setStock("");
+      setMaker("");
+      setRole("");
     }
   }
 
+  const columns = [
+    {
+      accessorKey: "model",
+      header: "Guitar Model"
+    },
+    {
+      accessorKey: "body",
+      header: "Body Type"
+    },
+    {
+      accessorKey: "brand",
+      header: "Brand"
+    },
+    {
+      accessorKey: "stock",
+      header: "Stock"
+    },
+    {
+      accessorKey: "maker",
+      header: "Manufacturer"
+    },
+    {
+      accessorKey: "role",
+      header: "Role"
+    }
+  ];
+
+  const table = useReactTable({
+    data: items,
+    columns: columns,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    initialState: {
+      pagination: {
+        pageSize: 3
+      }
+    }
+  });
+
   return (
     <div className="page">
+
+      {items.length > 0 && (
+        <div className="table-box">
+
+          <Typography variant="h5" className="table-title">
+            Guitar Registry
+          </Typography>
+
+          <table>
+
+            <thead>
+              <tr>
+                <th>Guitar Model</th>
+                <th>Body Type</th>
+                <th>Brand</th>
+                <th>Stock</th>
+                <th>Manufacturer</th>
+                <th>Role</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {table.getRowModel().rows.map((row) => (
+                <tr
+                  key={row.id}
+                  onClick={() => setSelected(row.original)}
+                >
+                  <td>{row.original.model}</td>
+                  <td>{row.original.body}</td>
+                  <td>{row.original.brand}</td>
+                  <td>{row.original.stock}</td>
+                  <td>{row.original.maker}</td>
+                  <td>{row.original.role}</td>
+                </tr>
+              ))}
+            </tbody>
+
+          </table>
+
+          <div className="page-buttons">
+
+            <Button
+              variant="contained"
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+            >
+              Previous
+            </Button>
+
+            <Button
+              variant="contained"
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}
+            >
+              Next
+            </Button>
+
+          </div>
+
+        </div>
+      )}
+
       <Box className="form-box">
 
         <Typography variant="h4" className="title">
@@ -229,6 +354,7 @@ function App() {
         </form>
 
       </Box>
+
     </div>
   );
 }

@@ -9,6 +9,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 30px;
 }
 
 .form-box {
@@ -42,5 +43,53 @@ button.add-button {
 }
 
 button.add-button:hover {
+  background-color: #ab0505;
+}
+
+.table-box {
+  width: 700px;
+  background-color: white;
+  padding: 25px;
+  border-radius: 10px;
+  border-top: 6px solid #ff6a00;
+}
+
+.table-title {
+  color: #d94b00;
+  margin-bottom: 15px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  background-color: #000000;
+  color: white;
+  padding: 10px;
+}
+
+td {
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid #cccccc;
+}
+
+tbody tr:hover {
+  background-color: #eeeeee;
+  cursor: pointer;
+}
+
+.page-buttons {
+  margin-top: 15px;
+}
+
+.page-buttons button {
+  margin-right: 10px;
+  background-color: #d94b00;
+}
+
+.page-buttons button:hover {
   background-color: #ab0505;
 }
